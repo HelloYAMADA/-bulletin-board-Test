@@ -1,7 +1,4 @@
-
-
 import java.io.IOException;
-import java.sql.SQLException;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,6 +7,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+import Beans.Mem_Beans;
+import dao.Mem_Dao;
 
 /**
  * Servlet implementation class Mem_log_servlet
@@ -45,20 +45,18 @@ public class Mem_log_servlet extends HttpServlet {
 		
 		Mem_Dao dao  = new Mem_Dao();
 		
-		Mem_beans result = false;
-		try {
-			result = dao.Mem_log(STU_ID, STU_PASS);
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
+		Mem_Beans result = null;
+		result = dao.Mem_log(STU_ID, STU_PASS);
 		
-		if(result) {
+		if(result != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", result);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB_INF/jsp/Mem_menu.jsp");
+			Mem_Beans USER = (Mem_Beans) session.getAttribute("user");
+			System.out.println(USER.getMem_id());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/mem_menu.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB_INF/jsp/Mem_log.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("Mem_log.html");
 			dispatcher.forward(request, response);
 		}
 	}

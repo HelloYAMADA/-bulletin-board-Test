@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import beans.mem_beans;
+import Beans.Mem_Beans;
 
 public class Mem_Dao {
 	
@@ -29,10 +29,10 @@ public class Mem_Dao {
 	//daoでログインできるか判断
 	//ユーザー名取得は一旦放置で
 	//戻り値beans変更
-	public mem_beans  Mem_log(String num, String pass) {
+	public Mem_Beans  Mem_log(String num, String pass) {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 	    	String sql = "SELECT STU_PASS, USER_NAME FROM stuinf_table WHERE STU_ID = ?";
-	    	mem_beans bean = new mem_beans();
+	    	Mem_Beans bean = new Mem_Beans();
 	    	
 		    PreparedStatement pStmt = conn.prepareStatement(sql);
 		    

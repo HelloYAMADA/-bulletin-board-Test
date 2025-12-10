@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>☆KCS専用オンライン掲示板☆</title>
+	<link rel="stylesheet" href="css/mem_log.css" />
+	<style>
+		.error-span {
+			color: red;
+			font-size: 0.9em;
+			margin-left: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<div class="header-title">☆KCS専用オンライン掲示板☆</div>
+		<div class="window-buttons">
+			<button id="fullscreen-btn" class="window-btn">🗖</button>
+			<button id="exit-fullscreen-btn" class="window-btn">🗕</button>
+			<button id="close-btn" class="window-btn">×</button>
+		</div>
+	</header>
+
+	<script>
+		document.getElementById("fullscreen-btn").addEventListener("click", () => {
+			if (!document.fullscreenElement) {
+				document.documentElement.requestFullscreen().catch(err => {
+					alert(`フルスクリーンにできませんでした: ${err.message}`);
+				});
+			}
+		});
+
+		document.getElementById("exit-fullscreen-btn").addEventListener("click", () => {
+			if (document.fullscreenElement) {
+				document.exitFullscreen();
+			}
+		});
+
+		document.getElementById("close-btn").addEventListener("click", () => {
+			window.close();
+
+			setTimeout(() => {
+				if (!window.closed) {
+					alert("このタブはブラウザの制限により閉じられません。手動で閉じてください。");
+				}
+			}, 200);
+		});
+	</script>
+
+	<h1>～ログイン画面～</h1>
+
+	<div class="main">
+
+		<form method="POST" action="Mem_log_servlet" onsubmit="return validateForm();">
+
+			<label for="studentId">学籍番号</label>
+			<input type="text" id="studentId" name="STU_ID" />
+			<span id="studentIdError" class="error-span"></span>
+
+			<label for="password">パスワード</label>
+			<input type="password" id="password" name="STU_PASS" />
+			<span id="passwordError" class="error-span"></span>
+
+			<div class="register-link" onclick="location.href='mem_reg.jsp'">
+				新規登録はこちらから
+			</div>
+
+			<button type="submit" class="login-btn">ログイン</button>
+		</form>
+	</div>
+
+	<script>
+		function validateForm() {
+			const studentId = document.getElementById('studentId').value.trim();
+			const password = document.getElementById('password').value.trim();
+
+			const studentIdError = document.getElementById('studentIdError');
+			const passwordError = document.getElementById('passwordError');
+
+			studentIdError.textContent = "";
+			passwordError.textContent = "";
+
+			let hasError = false;
+
+			if (studentId === "") {
+				studentIdError.textContent = "※学籍番号が入力されていません";
+				hasError = true;
+			}
+			if (password === "") {
+				passwordError.textContent = "※パスワードが入力されていません";
+				hasError = true;
+			}
+
+			return !hasError;
+		}
+	</script>
+
+</body>
+
+</html>

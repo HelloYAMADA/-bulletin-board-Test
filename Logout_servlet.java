@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 
 import jakarta.servlet.RequestDispatcher;
@@ -33,7 +32,7 @@ public class Logout_servlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB_INF/jsp/Mem_log.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/mem_log.html");
 		dispatcher.forward(request, response);
 	}
 
